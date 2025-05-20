@@ -1,0 +1,30 @@
+# VSCodeは、Sublimeみたいにvies->syntaxで入力補助を使えないみたい→でも、勝手に色々やってくれる！入力補助タブ的な表示が出た
+# コロンの次は、半角スペースを1個入れる
+# version: '3'
+# でも、バージョンを書くやり方は古いとwarningが出る。
+# →WARN[0000] /Users/miho.kuniga/PythonLecture_4DS/work/02_Docker/sec13/product-register/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+# ★「product-resister」というタイポがあったので、「product-register」に修正した！(25/5/17)
+volumes:
+  db-data:
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/product_register'
+    environment:
+      - 'DATABASE_PASSWORD=postgres'
+    tty: true
+    stdin_open: true
+    depends_on: 
+      - db
+    links: 
+      - db
+  db:
+    image: postgres
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+    environment:
+    - 'POSTGRES_USER=postgres'
+    - 'POSTGRES_PASSWORD=postgres'
