@@ -9,6 +9,9 @@ volumes:
 services:
   web:
     build: .
+    # webpackerがwebpacker.jsを作らないので、以下の行を追加(25.5.20)→でも、これをすると実行できないので、別サービスにしてみる
+    # command: bundle exec bin/webpack-dev-server
+    # ↑この1行のみ===========================================▲
     ports:
       - '3000:3000'
     volumes:
@@ -23,8 +26,19 @@ services:
       - db
   db:
     image: postgres
+    # image: postgres:15-bullseye
     volumes:
       - 'db-data:/var/lib/postgresql/data'
     environment:
     - 'POSTGRES_USER=postgres'
     - 'POSTGRES_PASSWORD=postgres'
+    # - 'POSTGRES_HOST_AUTH_METHOD=trust'
+
+  # webpackerがwebpacker.jsを作らないので、以下の行を追加(25.5.20)→でも、これをすると実行できないので、別サービスにしてみる↓
+  webpacker:
+    build: .
+    command: bundle exec bin/webpack-dev-server
+    volumes:
+      - .:/favorite_spot
+    ports:
+      - "8000:8000"
