@@ -77,14 +77,15 @@ test:
 # the values provided in this file. Alternatively, you can specify a connection
 # URL environment variable explicitly:
 #
-#   production:
-#     url: <%= ENV['MY_APP_DATABASE_URL'] %>
+# HEROKUを使うために、↓の2行のコメントを外す(#121、#123)
+production:
+  url: <%= ENV['MY_APP_DATABASE_URL'] %>
 #
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  database: product_register_production
-  username: product_register
-  password: <%= ENV['PRODUCT_REGISTER_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: product_register_production
+#   username: product_register
+#   password: <%= ENV['PRODUCT_REGISTER_DATABASE_PASSWORD'] %>
